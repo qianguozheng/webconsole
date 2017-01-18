@@ -39,7 +39,7 @@ func (a *Apibox) GetPID() (*Apibox, error) {
 
 func (a *Apibox) Start() error {
 	time.Sleep(time.Duration(1 * time.Second))
-	if apibox.Exists(apibox.PidPath) {
+	/*if apibox.Exists(apibox.PidPath) {
 		_, err := a.GetPID()
 		if nil != err {
 			return err
@@ -52,7 +52,8 @@ func (a *Apibox) Start() error {
 		}
 	} else {
 		website.Run()
-	}
+	}*/
+    	website.Run()
 	return nil
 }
 

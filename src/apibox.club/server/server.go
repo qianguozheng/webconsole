@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
+    "fmt"
 )
 
 var (
@@ -99,6 +100,7 @@ func Run() {
 		} else {
 			err := http.ListenAndServe(ABC_Conf.Web.Addr, DefaultServeMux)
 			if nil != err {
+                fmt.Println(err)
 				apibox.Log_Fatal(err)
 				return
 			}
