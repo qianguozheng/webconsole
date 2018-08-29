@@ -1,16 +1,18 @@
 package website
 
 import (
-	"apibox.club/utils"
 	"bytes"
 	"encoding/json"
-	"github.com/gorilla/websocket"
-	gossh "golang.org/x/crypto/ssh"
+	"fmt"
 	"io"
 	"net"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/gorilla/websocket"
+	gossh "golang.org/x/crypto/ssh"
+	"apibox.club/utils"
 )
 
 var (
@@ -26,12 +28,16 @@ type ssh struct {
 }
 
 func (s *ssh) Connect() (*ssh, error) {
-	config := &gossh.ClientConfig{}
+	config := &gossh.ClientConfig{HostKeyCallback: func(hostname string, remote net.Addr, key gossh.PublicKey) error {
+            return nil
+        },
+    }
 	config.SetDefaults()
 	config.User = s.user
 	config.Auth = []gossh.AuthMethod{gossh.Password(s.pwd)}
 	client, err := gossh.Dial("tcp", s.addr, config)
 	if nil != err {
+		fmt.Println("err:=", err.Error())
 		return nil, err
 	}
 	s.client = client
